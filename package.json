@@ -1,0 +1,14 @@
+{
+  "name": "sub-track",
+  "private": true,
+  "scripts": {
+    "dev": "npx wrangler dev",
+    "build:css": "tailwindcss -i ./tailwind.input.css -o ./dist/app.css --minify",
+    "build:embed": "node ./scripts/embed-tailwind.mjs",
+    "build": "npm run build:css && npm run build:embed"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.9",
+    "tailwindcss": "^3.4.17"
+  }
+}

@@ -1,0 +1,7 @@
+name = "sub-track"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[[kv_namespaces]]
+binding = "SUB_TRACK_KV"
+id = "e416f5e13d1744e89d9f293b5eef64a1"

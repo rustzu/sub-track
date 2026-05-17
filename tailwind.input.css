@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * 登录页密码框：浏览器内置「显示密码」等装饰会盖住自定义按钮区域并抢走第一次点击。
+ * 禁用原生控件后仅依赖页面上的切换按钮。
+ */
+input.login-password-field::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+input.login-password-field::-webkit-textfield-decoration-container {
+  pointer-events: none;
+}
+input.login-password-field::-ms-reveal,
+input.login-password-field::-ms-clear {
+  display: none;
+}
+
+/* 订阅表格窄屏卡片布局（无法用单行 utility 覆盖 thead/tbody 语义） */
+@layer components {
+  @media (max-width: 767px) {
+    .table-responsive thead {
+      display: none;
+    }
+    .table-responsive tbody,
+    .table-responsive tr,
+    .table-responsive td {
+      display: block;
+      width: 100%;
+    }
+    .table-responsive tr {
+      margin-bottom: 1rem;
+      overflow: hidden;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+      background-color: #fff;
+      box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    }
+    .table-responsive td {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 0.75rem;
+      border-bottom: 1px solid #f3f4f6;
+      padding: 0.75rem 1rem;
+    }
+    .table-responsive td:last-of-type {
+      border-bottom: none;
+    }
+    .table-responsive td::before {
+      content: attr(data-label);
+      flex-shrink: 0;
+      min-width: 4rem;
+      font-weight: 600;
+      color: #4b5563;
+    }
+    /* 第一列含「名称 · 标签」等较长标签时略增宽度 */
+    .subscription-data-table.table-responsive td:first-child::before {
+      min-width: 5.25rem;
+    }
+    .table-responsive .notes-wrap-narrow,
+    .table-responsive .hover-wrap-narrow {
+      max-width: 180px;
+      text-align: right;
+    }
+    .table-responsive .td-content-wrapper .notes-preview {
+      text-align: right;
+    }
+  }
+
+  /* 订阅列表表格：桌面端 SaaS 风格（与窄屏卡片布局分离，避免样式冲突） */
+  .subscription-table-card {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    border: 1px solid rgb(229 231 235 / 0.92);
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  }
+
+  /* 操作列：左对齐，换行后横向与纵向间距一致（flex gap） */
+  .subscription-data-table .action-buttons-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .subscription-data-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .subscription-data-table thead {
+      background-color: #f7f8f9;
+    }
+    .subscription-data-table thead th {
+      border-bottom: 1px solid #eeeeee;
+      padding: 1rem 0.75rem;
+      text-align: left;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      font-weight: 600;
+      color: #111827;
+      vertical-align: middle;
+    }
+    .subscription-data-table tbody td {
+      border-bottom: 1px solid #f0f0f0;
+      padding: 1rem 0.75rem;
+      vertical-align: top;
+      background-color: #fff;
+    }
+    .subscription-data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .subscription-data-table tbody tr.subscription-row:hover td {
+      background-color: #fafafa;
+    }
+    .subscription-data-table tbody tr.subscription-row-inactive td {
+      background-color: rgb(249 250 251 / 0.85);
+    }
+    .subscription-data-table tbody tr.subscription-row-inactive:hover td {
+      background-color: rgb(243 244 246 / 0.9);
+    }
+    /* 到期时间列：公历、倒计时、农历/开始日期等需要更宽可用空间 */
+    .subscription-data-table thead th:nth-child(3),
+    .subscription-data-table tbody td:nth-child(3) {
+      width: 28%;
+      min-width: 280px;
+      box-sizing: border-box;
+    }
+    /* 操作列：约两个小号按钮宽度 + 间距（table-fixed 下固定列宽） */
+    .subscription-data-table thead th:last-child,
+    .subscription-data-table tbody td:last-child {
+      width: 160px;
+      box-sizing: border-box;
+    }
+  }
+
+  @media (max-width: 767px) {
+    #systemTimeDisplay {
+      display: none !important;
+    }
+  }
+}
